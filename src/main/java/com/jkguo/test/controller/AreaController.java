@@ -1,6 +1,8 @@
 package com.jkguo.test.controller;
 
-import com.jkguo.test.bean.AreaBean;
+import com.jkguo.test.enums.RespResultEnum;
+import com.jkguo.test.resp.BaseResp;
+import com.jkguo.test.resp.bean.AreaBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,12 +26,22 @@ public class AreaController {
      */
     @ResponseBody
     @RequestMapping("getProvince")
-    public List<AreaBean> getProvince(){
-        List<AreaBean> provinces = new ArrayList<AreaBean>();
-        AreaBean areaBean = new AreaBean();
-        areaBean.setCode("0");
-        areaBean.setName("北京");
-        provinces.add(areaBean);
-        return provinces;
+    public BaseResp getProvince(){
+        BaseResp resp = new BaseResp();
+        try{
+            List<AreaBean> provinces = new ArrayList<AreaBean>();
+            AreaBean areaBean = new AreaBean();
+            areaBean.setCode("0");
+            areaBean.setName("北京");
+            provinces.add(areaBean);
+
+            resp.setData(provinces);
+            resp.setResult(RespResultEnum.RESP_RESUlT_SUCCESS);
+            return resp;
+        }catch (Exception e){
+            //请求失败
+        }
+        resp.setResult(RespResultEnum.RESP_RESUlT_FAILED);
+        return resp;
     }
 }

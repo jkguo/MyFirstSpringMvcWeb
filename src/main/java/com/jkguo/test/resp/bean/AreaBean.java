@@ -1,4 +1,4 @@
-package com.jkguo.test.bean;
+package com.jkguo.test.resp.bean;
 
 /**
  * Created by jkguo on 2016/11/11.
