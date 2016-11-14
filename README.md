@@ -6,7 +6,7 @@
 
 ##运行
 
-	1.jetty运行项目:mvn jetty:run
+	1.jetty运行项目:mvn -Djetty.port=8080 jetty:run
 	2.请求例子:http://localhost:8080/myfirstspringmvcweb/area/getProvince
 
 ##更新细节
