@@ -9,9 +9,12 @@
 	项目是springmvc最简单的搭建,使用maven+springmvc+jackson+jetty
 
 ##运行
-
+	方法一:maven jetty运行项目
 	1.jetty运行项目:mvn clean -Djetty.port=8080 jetty:run
 	2.请求例子:http://localhost:8080/myfirstspringmvcweb/area/getProvince
+	
+	方法二:打包为war包
+	1.打包命令:mvn clean install
 
 ##更新细节
 	
