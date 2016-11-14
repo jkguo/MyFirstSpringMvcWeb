@@ -5,7 +5,7 @@
     <artifactId>MyFirstSpringMvcWeb</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>myfistspringmvcweb Maven Webapp</name>
+    <name>myfirstspringmvcweb Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -34,7 +34,7 @@
 
     </dependencies>
     <build>
-        <finalName>myfistspringmvcweb</finalName>
+        <finalName>myfirstspringmvcweb</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
