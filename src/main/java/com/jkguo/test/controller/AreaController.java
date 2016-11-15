@@ -6,8 +6,11 @@ import com.jkguo.test.resp.bean.AreaBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -25,8 +28,13 @@ public class AreaController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("getProvince")
-    public BaseResp getProvince() {
+    @RequestMapping(value = "getProvince",method= RequestMethod.POST)
+    public BaseResp getProvince(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Type");
+
         BaseResp resp = new BaseResp();
         try {
             List<AreaBean> provinces = getProvinces();
@@ -61,15 +69,22 @@ public class AreaController {
     /**
      * 获取城市接口
      *
-     * @param params 省份code
+    // * @param params 省份code
      * @return
      */
     @ResponseBody
-    @RequestMapping("getCity")
-    public BaseResp getCity(@RequestBody Map<String, Object> params) {
+    @RequestMapping(value = "getCity")
+    public BaseResp getCity(HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Type");
+
         BaseResp resp = new BaseResp();
         try {
-            String provinceCode = (String) params.get("provinceCode");
+            String provinceCode = request.getParameter("provinceCode");
+//            String provinceCode = (String) params.get("provinceCode");
+            System.out.println(provinceCode);
             List<AreaBean> citys = getCitys(provinceCode);
             resp.setData(citys);
             resp.setResult(RespResultEnum.RESP_RESUlT_SUCCESS);
@@ -88,9 +103,9 @@ public class AreaController {
      * @param provinceCode
      * @return
      */
-    public List<AreaBean> getCitys(String provinceCode) {
+    private List<AreaBean> getCitys(String provinceCode) {
         List<AreaBean> citys = new ArrayList<AreaBean>();
-        Map<String, String[]> allCitys = allCitys();
+        Map<String, String[]> allCitys = getAllCitys();
         String[] cityNames = allCitys.get(provinceCode);
         for (int i = 0; i < cityNames.length; i++) {
             AreaBean areaBean = new AreaBean();
@@ -106,7 +121,7 @@ public class AreaController {
      *
      * @return
      */
-    private Map<String, String[]> allCitys() {
+    private Map<String, String[]> getAllCitys() {
         Map<String, String[]> cityMap = new HashMap<String, String[]>();
         cityMap.put("0_0", new String[]{"北京市"});
         cityMap.put("0_1", new String[]{"天津市"});
