@@ -85,6 +85,7 @@ public class AreaController {
         try {
             String provinceCode = request.getParameter("provinceCode");
 //            String provinceCode = (String) params.get("provinceCode");
+            System.out.println(provinceCode);
             List<AreaBean> citys = getCitysByProvince(provinceCode);
             resp.setData(citys);
             resp.setResult(RespResultEnum.RESP_RESUlT_SUCCESS);
