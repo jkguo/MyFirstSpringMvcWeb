@@ -1,6 +1,5 @@
 package com.jkguo.test.controller;
 
-import com.jkguo.test.enums.RespResultEnum;
 import com.jkguo.test.resp.BaseResp;
 import com.jkguo.test.resp.bean.AreaBean;
 import org.springframework.stereotype.Controller;
@@ -37,13 +36,13 @@ public class AreaController {
         try {
             List<AreaBean> provinces = getProvinces();
             resp.setData(provinces);
-            resp.setResult(RespResultEnum.RESP_RESUlT_SUCCESS);
+            resp.setResult(BaseResp.RespResult.RESP_RESUlT_SUCCESS);
             return resp;
         } catch (Exception e) {
             //请求失败
             System.out.println("获取省份列表,请求失败:" + e);
         }
-        resp.setResult(RespResultEnum.RESP_RESUlT_FAILED);
+        resp.setResult(BaseResp.RespResult.RESP_RESUlT_FAILED);
         return resp;
     }
 
@@ -85,13 +84,13 @@ public class AreaController {
             System.out.println(provinceCode);
             List<AreaBean> citys = getCitysByProvince(provinceCode);
             resp.setData(citys);
-            resp.setResult(RespResultEnum.RESP_RESUlT_SUCCESS);
+            resp.setResult(BaseResp.RespResult.RESP_RESUlT_SUCCESS);
             return resp;
         } catch (Exception e) {
             //请求失败
             System.out.println("获取城市列表,请求失败:" + e);
         }
-        resp.setResult(RespResultEnum.RESP_RESUlT_FAILED);
+        resp.setResult(BaseResp.RespResult.RESP_RESUlT_FAILED);
         return resp;
     }
 
@@ -178,13 +177,13 @@ public class AreaController {
             String cityCode = request.getParameter("cityCode");
             List<AreaBean> countiesByCity = getCountiesByCity(cityCode);
             resp.setData(countiesByCity);
-            resp.setResult(RespResultEnum.RESP_RESUlT_SUCCESS);
+            resp.setResult(BaseResp.RespResult.RESP_RESUlT_SUCCESS);
             return resp;
         }catch (Exception e){
             //请求失败
             System.out.println("获取县级市列表,请求失败:" + e);
         }
-        resp.setResult(RespResultEnum.RESP_RESUlT_FAILED);
+        resp.setResult(BaseResp.RespResult.RESP_RESUlT_FAILED);
         return resp;
     }
 
