@@ -3,12 +3,15 @@ package com.jkguo.test.controller;
 import com.jkguo.test.resp.BaseResp;
 import com.jkguo.test.resp.bean.AreaBean;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -26,12 +29,8 @@ public class AreaController {
      */
     @ResponseBody
     @RequestMapping(value = "getProvince",method= RequestMethod.POST)
-    public BaseResp getProvince(HttpServletResponse response) {
+    public BaseResp getProvince(HttpServletRequest request,HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Type");
-
         BaseResp resp = new BaseResp();
         try {
             List<AreaBean> provinces = getProvinces();
@@ -71,16 +70,12 @@ public class AreaController {
      */
     @ResponseBody
     @RequestMapping(value = "getCity")
-    public BaseResp getCity(HttpServletRequest request, HttpServletResponse response) {
+    public BaseResp getCity(HttpServletResponse response, @RequestBody Map<String,Object> params) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Type");
 
         BaseResp resp = new BaseResp();
         try {
-            String provinceCode = request.getParameter("provinceCode");
-//            String provinceCode = (String) params.get("provinceCode");
+            String provinceCode = (String) params.get("provinceCode");
             System.out.println(provinceCode);
             List<AreaBean> citys = getCitysByProvince(provinceCode);
             resp.setData(citys);
@@ -159,22 +154,19 @@ public class AreaController {
 
     /**
      * 获取县级市
-     * @param request
      * @param response
+     * @param params
      * @return
      */
     @ResponseBody
     @RequestMapping("getCounty")
-    public BaseResp getCounty(HttpServletRequest request, HttpServletResponse response){
+    public BaseResp getCounty(HttpServletResponse response, @RequestBody Map<String,Object> params){
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Type");
 
         BaseResp resp = new BaseResp();
 
         try{
-            String cityCode = request.getParameter("cityCode");
+            String cityCode = (String) params.get("cityCode");
             List<AreaBean> countiesByCity = getCountiesByCity(cityCode);
             resp.setData(countiesByCity);
             resp.setResult(BaseResp.RespResult.RESP_RESUlT_SUCCESS);
