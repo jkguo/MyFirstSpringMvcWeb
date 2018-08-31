@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Created by jkguo on 2016/11/11.
+ * @author jkguo
+ * @date 2016/11/11
  * 地区接口类
  */
 @Controller
@@ -26,14 +25,16 @@ public class AreaController {
 
     @Autowired
     AreaService areaService;
+
     /**
      * 获取省份接口
      *
+     * @param response
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "getProvince",method= RequestMethod.POST)
-    public BaseResp getProvince(HttpServletRequest request,HttpServletResponse response) {
+    @RequestMapping(value = "getProvince", method = RequestMethod.POST)
+    public BaseResp getProvince(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         BaseResp resp = new BaseResp();
         try {
@@ -52,12 +53,12 @@ public class AreaController {
     /**
      * 获取城市接口
      *
-    // * @param params 省份code
+     * @param params
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "getCity")
-    public BaseResp getCity(HttpServletResponse response, @RequestBody Map<String,Object> params) {
+    public BaseResp getCity(HttpServletResponse response, @RequestBody Map<String, Object> params) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         BaseResp resp = new BaseResp();
         try {
@@ -76,22 +77,23 @@ public class AreaController {
 
     /**
      * 获取县级市
+     *
      * @param response
      * @param params
      * @return
      */
     @ResponseBody
     @RequestMapping("getCounty")
-    public BaseResp getCounty(HttpServletResponse response, @RequestBody Map<String,Object> params){
+    public BaseResp getCounty(HttpServletResponse response, @RequestBody Map<String, Object> params) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         BaseResp resp = new BaseResp();
-        try{
+        try {
             String cityCode = (String) params.get("cityCode");
             List<AreaBean> countiesByCity = areaService.getCountiesByCity(cityCode);
             resp.setData(countiesByCity);
             resp.setResult(BaseResp.RespResult.RESP_RESUlT_SUCCESS);
             return resp;
-        }catch (Exception e){
+        } catch (Exception e) {
             //请求失败
             System.out.println("获取县级市列表,请求失败:" + e);
         }
